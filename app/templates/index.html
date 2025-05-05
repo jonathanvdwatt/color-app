@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Argo CD Color Demo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Argo CD GitOps Demo</h1>
+    <div class="shape-container">
+        <div class="shape" id="shape1"></div>
+        <div class="shape" id="shape2"></div>
+        <div class="shape" id="shape3"></div>
+        <div class="shape" id="target-shape"></div>
+    </div>
+    <div class="info">
+        <p>The color of the last shape is controlled by a ConfigMap managed via GitOps.</p>
+        <p>Current ConfigMap Color: <strong id="color-value">Loading...</strong></p>
+        <p>(Modify the ConfigMap in Git, commit, and watch Argo CD update the app!)</p>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html> 

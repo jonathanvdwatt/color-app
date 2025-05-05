@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  # Name of the Argo CD Application resource
+  name: color-app
+  # Deploy this Application resource into the argocd namespace
+  namespace: argocd
+  # Add finalizer for graceful deletion
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  # Link to the Argo CD project (usually 'default' unless you create others)
+  project: default
+
+  # Source of the application manifests
+  source:
+    # !!! IMPORTANT: Replace with the URL of YOUR Git repository !!!
+    repoURL: https://github.com/your-username/your-repo-name.git
+    # Branch or tag to sync from
+    targetRevision: HEAD
+    # Path within the repository where the Kubernetes manifests are located
+    path: color-app-demo/k8s
+
+  # Destination cluster and namespace
+  destination:
+    # URL of the target cluster (use the default for the cluster Argo CD runs in)
+    server: https://kubernetes.default.svc
+    # Namespace where the app's resources (Deployment, Service, etc.) will be deployed
+    namespace: color-app-ns # Should match the namespace in k8s/namespace.yaml
+
+  # Sync policy
+  syncPolicy:
+    automated:
+      # Automatically prune resources that are removed from Git
+      prune: true
+      # Automatically self-heal if the live state deviates from Git
+      selfHeal: true
+    # Creates the namespace if it doesn't exist (useful for first deploy)
+    syncOptions:
+      - CreateNamespace=true 

@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: color-app-ingress
+  namespace: color-app-ns
+  annotations:
+    # Specify the ingress class to use (nginx)
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  # Route traffic based on the host header. 
+  # Since we access via localhost:8080, we don't need a specific host.
+  # Using a wildcard or omitting the host works, but explicitly targeting 
+  # traffic potentially helps if other Ingresses exist.
+  # Let's keep it simple and route all traffic handled by this Ingress.
+  - http:
+      paths:
+      - path: / # Route all paths
+        pathType: Prefix # Match based on prefix
+        backend:
+          service:
+            # Name of the service to route to
+            name: color-app-service
+            port:
+              # Port number the service listens on
+              number: 80 

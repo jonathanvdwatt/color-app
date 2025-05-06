@@ -5,4 +5,4 @@ metadata:
   namespace: color-app-ns
 data:
   # This is the file the Flask app reads
-  shape-color.txt: "cyan" 
+  shape-color.txt: "gold" 
